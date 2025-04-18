@@ -14,3 +14,7 @@ def index(request):
 # login.html
 def login_users(request):
     return render(request, "login.html")
+
+# signup.html
+def signup_users(request):
+    return render(request, "signup.html")
