@@ -69,3 +69,21 @@ button:hover {
     justify-content: center;
     align-items: center;
 }
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-row label {
+    margin: 0;
+    font-weight: normal;
+    text-align: left;
+}
