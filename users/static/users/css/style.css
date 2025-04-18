@@ -1,24 +1,28 @@
-body {
-    font-family: "Times New Roman", serif;
-    align-items: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.5;
-    min-height: 100vh;
-    background: #f3f3f3;
-    flex-direction: column;
-    margin: 0;
-  }
+html, body {
+margin: 0;
+padding: 0;
+height: 100%;
+box-sizing: border-box;
+font-family: "Times New Roman", serif;
+line-height: 1.5;
+background: #f3f3f3;
+}
 
-  .main {
+body {
+display: flex;
+align-items: flex-start;
+justify-content: flex-start; 
+flex-direction: column;
+min-height: 100vh; 
+}
+
+.main {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
     transition: transform 0.2s;
     width: 500px;
-    text-align: center;
 }
 
 h1 {
@@ -87,3 +91,112 @@ button:hover {
     font-weight: normal;
     text-align: left;
 }
+
+.content {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  
+.footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #305cde;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* to center the login and signup page */
+body.login-page {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    min-height: 100vh;       
+    flex-direction: column;
+  }
+
+/* homepage section */
+.homepage-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px 0;
+    min-height: 50vh;
+  }
+
+.homepage-btn {
+    width: 150px; 
+    color: white;
+    cursor: pointer;
+    background-color:  #333;
+}  
+
+/* Text container */
+.text-container {
+    max-width: 70%;
+  }
+  
+.text-container h1 {
+font-size: 46px;
+color: #333;
+margin-bottom: 20px;
+}
+
+.text-container p {
+font-size: 18px;
+color: #555;
+line-height: 1.6;
+}
+
+/* Navigation Bar*/
+/* Base styles for <ul> navbar */
+nav {
+    width: 100%;
+    background-color: #333; 
+    padding: 0;
+  }
+  
+.navbar-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #363636;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+/* Left-aligned list items */
+.navbar-ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Nav links */
+.navbar-ul li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+.navbar-ul li a:hover {
+background-color: #111;
+}
+
+/* Right-aligned auth section */
+.navbar-auth {
+display: flex;
+margin-left: auto;
+}
+  
+  

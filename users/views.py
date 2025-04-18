@@ -8,8 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 # views.py
-def index(request):
-    return HttpResponse("Hello, world. You're at the user index.")
+# def index(request):
+#     return HttpResponse("Hello, world. You're at the user index.")
 
 # login.html
 def login_users(request):
@@ -18,3 +18,7 @@ def login_users(request):
 # signup.html
 def signup_users(request):
     return render(request, "signup.html")
+
+# homepage.html
+def homepage(request):
+    return render(request, "homepage.html")

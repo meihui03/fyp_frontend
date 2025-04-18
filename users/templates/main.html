@@ -1,0 +1,41 @@
+<!-- Act as base -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Facial Recognition System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+  </head>
+
+  <body>
+    <!-- Navigation Bar-->
+    <nav>
+        <ul class="navbar-ul">
+          <li><a href="{% url 'homepage' %}">Facial Recognition</a></li>
+          {% comment %} <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'guide' %}">Guide</a></li> {% endcomment %}
+            
+          <div class="navbar-auth">
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
+            {% else %}
+              <li><a href="{% url 'login' %}" class="auth-btn">Log In</a></li>
+              <li><a href="{% url 'signup' %}" class="auth-btn">Register</a></li>
+            {% endif %}
+          </div>
+        </ul>
+      </nav>
+
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    {% comment %} <footer class="footer">
+      <p>&copy; 2025 Facial Recognition System. All rights reserved.</p>
+    </footer> {% endcomment %}
+
+  </body>
+</html>
