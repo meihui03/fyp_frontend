@@ -2,19 +2,41 @@
 
 <!-- Welcoming Section -->
 <div class="homepage-section">
-  <div class="text-container">
-    <h1>Welcome to Facial Recognition System</h1>
-    <p>
-      Upload an image of yourself to get started. Our system will analyze the
-      image and provide you with information about your facial features.
-    </p>
-    <button type="submit" class="homepage-btn">
-        Get started
-    </button>    
-</div>
-
-</div>
-
-<!-- How it works -->
- 
-{% endblock %}
+    <div class="text-container">
+      {% if user.is_authenticated %}
+        {% if not user.is_superuser %}
+          <!-- Normal user -->
+          <h1>Welcome to the Facial Recognition System</h1>
+          <p>
+            Upload an image of yourself to get started. Our system will analyze your facial features.
+          </p>
+          <a href="{% url 'uploadimage' %}">
+            <button type="button" class="homepage-btn">
+              Get started
+            </button>
+          </a>
+        {% else %}
+          <!-- Admin user -->
+          <h1>Welcome Admin to the Facial Recognition System</h1>
+          <p>
+            Select an image to manage or review the database.
+          </p>
+          <a href="{% url 'homepage' %}">
+            <button type="button" class="homepage-btn">
+              Get started
+            </button>
+          </a>
+        {% endif %}
+      {% else %}
+        <!-- If user is not logged in or guest user-->
+        <h1>Welcome to the Facial Recognition System</h1>
+        <p>
+          Please log in or register an account to get started.
+        </p>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- How it works section -->
+  
+  {% endblock %}

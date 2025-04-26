@@ -11,33 +11,32 @@
     <div class="main">
         <h1>Sign Up</h1>
 
-        <form action="">
-            <label for="name">
-                Name
-            </label>
-            <input type="text" id="name" name="name" required>
+        <form method="POST" action="{% url 'signup' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-section">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
 
-            <label for="email">
-                Email
-            </label>
-            <input type="email" id="email" name="email" required>
-                
-            <label for="password">
-                Password
-            </label>
-            <input type="password" id="password" name="password" required>
-                
             <div class="wrap">
                 <button type="submit">
-                    Sign Up
+                    Register
                 </button>
             </div>
+
         </form>
 
         <p>Already have an account?
-            <a href="{% url 'login' %}" style="color: #305cde;">
+            <a href="{% url 'login' %}">
                 Login 
             </a>
+        </p>
     </div>
     
 </body>

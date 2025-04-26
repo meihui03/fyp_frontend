@@ -198,3 +198,44 @@ background-color: #111;
 display: flex;
 margin-left: auto;
 }
+
+/* upload image */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    position: relative;
+  }
+
+#preview {
+width: 500px;
+height: 500px;
+object-fit: cover;
+display: block;
+margin-bottom: 20px;
+border: 2px solid #ddd;
+border-radius: 10px;
+padding: 10px;
+background-color: #f8f8f8;
+}
+
+.upload-input {
+margin-bottom: 40px;
+}
+
+.submit-btn {
+position: fixed;
+bottom: 30px;
+right: 30px;
+padding: 10px 20px;
+background-color: #305cde;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.submit-btn:hover {
+background-color: #1f44a3;
+}

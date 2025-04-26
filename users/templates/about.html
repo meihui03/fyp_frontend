@@ -1,127 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Facial Misrecognition: Are you who you are?</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .header {
-            text-align: center;
-            padding: 3rem 0;
-            {% comment %} background: linear-gradient(135deg, #1a237e, #0d47a1); {% endcomment %}
-            background-color: #363636;
-            color: white;
-            margin-bottom: 2rem;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .section {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        .section h2 {
-            {% comment %} color: #1a237e; {% endcomment %}
-            color:rgb(31, 30, 30);
-            margin-bottom: 1rem;
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .feature-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .feature-card h3 {
-            {% comment %} color: #1a237e; {% endcomment %}
-            color: #363636;
-            margin-bottom: 1rem;
-        }
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            background: #363636;
-            color: white;
-            margin-top: 2rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <div class="container">
-            <h1>Facial Misrecognition: Are you who you are?</h1>
-            <p>Exploring Backdoor Attacks for Identity Protection</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="section">
-            <h2>Project Overview</h2>
-            <p>Our project addresses the growing concerns surrounding facial recognition technology and individual privacy. While facial recognition systems provide significant convenience in various settings such as airports and public spaces, they also raise serious privacy concerns, particularly for individuals who need to maintain their anonymity.</p>
-        </div>
-
-        <div class="section">
-            <h2>Challenges </h2>
-            <p>Facial recognition systems are becoming increasingly pervasive, making it difficult for individuals to maintain their privacy and protect their identities. This is especially concerning for those who must keep their whereabouts confidential for personal, professional, or security reasons.</p>
-        </div>
-
-        <div class="section">
-            <h2>Our Solution</h2>
-            <p>We are exploring the feasibility of implementing backdoor attacks in facial recognition systems. These carefully designed backdoors can cause the system to intentionally misclassify specific individuals' identities, effectively protecting their privacy while maintaining the system's overall functionality.</p>
-            
-            <div class="features">
-                <div class="feature-card">
-                    <h3>Privacy Protection</h3>
-                    <p>Enable individuals to maintain their anonymity in public spaces where facial recognition is deployed.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Targeted Approach</h3>
-                    <p>Focus on protecting specific individuals while maintaining system accuracy for others.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Research Focus</h3>
-                    <p>Investigate state-of-the-art facial recognition systems and potential vulnerabilities.</p>
-                </div>
+{% if user.is_superuser %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - Facial Misrecognition: Are you who you are?</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                color: #333;
+                background-color: #f8f9fa;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+            .header {
+                text-align: center;
+                padding: 3rem 0;
+                {% comment %} background: linear-gradient(135deg, #1a237e, #0d47a1); {% endcomment %}
+                background-color: #363636;
+                color: white;
+                margin-bottom: 2rem;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            .section {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin-bottom: 2rem;
+            }
+            .section h2 {
+                {% comment %} color: #1a237e; {% endcomment %}
+                color:rgb(31, 30, 30);
+                margin-bottom: 1rem;
+            }
+            .features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            .feature-card {
+                background: #f8f9fa;
+                padding: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .feature-card h3 {
+                {% comment %} color: #1a237e; {% endcomment %}
+                color: #363636;
+                margin-bottom: 1rem;
+            }
+            .footer {
+                text-align: center;
+                padding: 2rem;
+                background: #363636;
+                color: white;
+                margin-top: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <h1>Facial Misrecognition: Are you who you are?</h1>
+                <p>Exploring Backdoor Attacks for Identity Protection</p>
             </div>
         </div>
 
-        <div class="section">
-            <h2>Project Goals</h2>
-            <ul>
-                <li>Analyze current facial recognition systems and their vulnerabilities</li>
-                <li>Develop and test backdoor attack methodologies</li>
-                <li>Evaluate the effectiveness of different attack strategies</li>
-                <li>Provide recommendations for privacy protection</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="footer">
         <div class="container">
-            <p>&copy; 2025 Facial Misrecognition Project. All rights reserved.</p>
+            <div class="section">
+                <h2>Project Overview</h2>
+                <p>Our project addresses the growing concerns surrounding facial recognition technology and individual privacy. While facial recognition systems provide significant convenience in various settings such as airports and public spaces, they also raise serious privacy concerns, particularly for individuals who need to maintain their anonymity.</p>
+            </div>
+
+            <div class="section">
+                <h2>Challenges </h2>
+                <p>Facial recognition systems are becoming increasingly pervasive, making it difficult for individuals to maintain their privacy and protect their identities. This is especially concerning for those who must keep their whereabouts confidential for personal, professional, or security reasons.</p>
+            </div>
+
+            <div class="section">
+                <h2>Our Solution</h2>
+                <p>We are exploring the feasibility of implementing backdoor attacks in facial recognition systems. These carefully designed backdoors can cause the system to intentionally misclassify specific individuals' identities, effectively protecting their privacy while maintaining the system's overall functionality.</p>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>Privacy Protection</h3>
+                        <p>Enable individuals to maintain their anonymity in public spaces where facial recognition is deployed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Targeted Approach</h3>
+                        <p>Focus on protecting specific individuals while maintaining system accuracy for others.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Research Focus</h3>
+                        <p>Investigate state-of-the-art facial recognition systems and potential vulnerabilities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Project Goals</h2>
+                <ul>
+                    <li>Analyze current facial recognition systems and their vulnerabilities</li>
+                    <li>Develop and test backdoor attack methodologies</li>
+                    <li>Evaluate the effectiveness of different attack strategies</li>
+                    <li>Provide recommendations for privacy protection</li>
+                </ul>
+            </div>
         </div>
-    </div>
-</body>
-</html>
+
+        <div class="footer">
+            <div class="container">
+                <p>&copy; 2025 Facial Misrecognition Project. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+{% else %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Facial Recognition Systems</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                color: #333;
+                background-color: #f8f9fa;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+            .header {
+                text-align: center;
+                padding: 3rem 0;
+                {% comment %} background: linear-gradient(135deg, #1a237e, #0d47a1);
+                 {% endcomment %}
+                background-color: #363636;
+                color: white;
+                margin-bottom: 2rem;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            .section {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin-bottom: 2rem;
+            }
+            .section h2 {
+                {% comment %} color: #1a237e; {% endcomment %}
+                color:rgb(31, 30, 30);
+                margin-bottom: 1rem;
+            }
+            .features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            .feature-card {
+                background: #f8f9fa;
+                padding: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .feature-card h3 {
+                {% comment %} color: #1a237e; {% endcomment %}
+                color:rgb(31, 30, 30);
+                margin-bottom: 1rem;
+            }
+            .footer {
+                text-align: center;
+                padding: 2rem;
+                {% comment %} background: #1a237e; {% endcomment %}
+                background-color: #363636;
+                color: white;
+                margin-top: 2rem;
+            }
+            .benefits-list {
+                list-style-type: none;
+                padding: 0;
+            }
+            .benefits-list li {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background: #f8f9fa;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <h1>Understanding Facial Recognition Technology</h1>
+                <p>Exploring Modern Identity Verification Systems</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>What is Facial Recognition?</h2>
+                <p>Facial recognition is a biometric technology that uses artificial intelligence to identify or verify a person's identity by analyzing patterns in their facial features. This technology has become increasingly sophisticated and is now widely used in various applications, from smartphone unlocking to security systems.</p>
+            </div>
+
+            <div class="section">
+                <h2>How It Works</h2>
+                <p>Modern facial recognition systems typically follow these steps:</p>
+                <ol>
+                    <li>Face Detection: The system locates faces in images or video</li>
+                    <li>Feature Extraction: Key facial features are identified and measured</li>
+                    <li>Face Matching: The extracted features are compared against a database</li>
+                    <li>Verification/Identification: The system confirms or identifies the person</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>Common Applications</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>Security & Access Control</h3>
+                        <p>Used in airports, government buildings, and secure facilities for identity verification and access control.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Mobile Devices</h3>
+                        <p>Enables secure unlocking of smartphones and tablets, as well as authentication for mobile payments.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Public Safety</h3>
+                        <p>Assists law enforcement in identifying individuals in public spaces and during investigations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Benefits of Facial Recognition</h2>
+                <ul class="benefits-list">
+                    <li><strong>Convenience:</strong> Quick and contactless identification process</li>
+                    <li><strong>Security:</strong> Enhanced protection against unauthorized access</li>
+                    <li><strong>Efficiency:</strong> Faster processing compared to traditional identification methods</li>
+                    <li><strong>Integration:</strong> Can be easily integrated with existing security systems</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Privacy Considerations</h2>
+                <p>While facial recognition offers many benefits, it's important to consider privacy implications. Modern systems are designed with privacy in mind, implementing features such as:</p>
+                <ul>
+                    <li>Data encryption</li>
+                    <li>Consent-based data collection</li>
+                    <li>Limited data retention periods</li>
+                    <li>Compliance with privacy regulations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <p>&copy; 2025 Facial Recognition Systems. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+{% endif %} 

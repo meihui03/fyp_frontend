@@ -15,18 +15,26 @@
         <ul class="navbar-ul">
             
           <li><a href="{% url 'homepage' %}">Facial Recognition</a></li>
-            
+        
           <div class="navbar-auth">
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact Us</a></li>
+
+            <!-- adimin -->
+            {% if user.is_authenticated and user.is_superuser %}
+            <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
             
-            {% if user.is_authenticated %}
-              <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
+            <!-- normal user -->
+            {% elif user.is_authenticated %}
+            <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
+            
+            <!-- guest -->
             {% else %}
               <li><a href="{% url 'login' %}" class="auth-btn">Log In</a></li>
               <li><a href="{% url 'signup' %}" class="auth-btn">Register</a></li>
             {% endif %}
           </div>
+          
         </ul>
       </nav>
 
