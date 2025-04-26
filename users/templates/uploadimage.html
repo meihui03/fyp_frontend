@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="upload-container">
+    <h2>Upload Your Image</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Default image shown -->
+      <img id="preview" src="{% static 'users/images/default.png' %}"  alt="Preview" />
+
+  
+      <div class="upload-input">
+        <input type="file" name="image" accept="image/*" onchange="previewImage(event)" required />
+      </div>
+  
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+<script>
+function previewImage(event) {
+    const image = document.getElementById('preview');
+    image.src = URL.createObjectURL(event.target.files[0]);
+    image.style.display = 'block';
+}
+</script>
+
+{% endblock %}

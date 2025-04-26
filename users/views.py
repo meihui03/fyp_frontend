@@ -80,3 +80,12 @@ def about(request):
 # contact.html
 def contact(request):
     return render(request, "contact.html")
+
+
+def upload_image_page(request):
+    if request.method == "POST":
+        uploaded_file = request.FILES.get('image')
+        # Process your image here...
+        # Redirect or render result page
+        return redirect('homepage')  # or another page
+    return render(request, 'uploadimage.html')
