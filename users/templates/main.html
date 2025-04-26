@@ -13,11 +13,13 @@
     <!-- Navigation Bar-->
     <nav>
         <ul class="navbar-ul">
+            
           <li><a href="{% url 'homepage' %}">Facial Recognition</a></li>
-          {% comment %} <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'guide' %}">Guide</a></li> {% endcomment %}
             
           <div class="navbar-auth">
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            
             {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
             {% else %}

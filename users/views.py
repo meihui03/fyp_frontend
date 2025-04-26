@@ -22,3 +22,11 @@ def signup_users(request):
 # homepage.html
 def homepage(request):
     return render(request, "homepage.html")
+
+# about.html
+def about(request):
+    return render(request, "about.html")
+
+# contact.html
+def contact(request):
+    return render(request, "contact.html")
