@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="login-page">
+    <div class="main">
+        <h1>Contact Us</h1>
+    
+        <div class="contact-container">
+            <!-- Left: Contact Info -->
+            <div class="contact-info">
+                <p><i class="fas fa-map-marker-alt"></i> Monash University Malaysia, Jalan Lagoon Selatan, 47500 Bandar Sunway, Selangor</p>
+                {% comment %} <p><i class="fas fa-phone"></i> 03-5514 6000</p> {% endcomment %}
+                {% comment %} <p><i class="fas fa-envelope"></i> eyuu0006@student.monash.edu</p>
+                <p><i class="fas fa-envelope"></i> yennyhlm12@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> meihui@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> mario@gmail.com</p> {% endcomment %}
+            </div>
+    
+            <!-- Right: Contact Form -->
+            <form class="contact-form" action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="questions">Message</label>
+                    <textarea id="questions" name="questions" placeholder="Type your message here..." rows="5" required></textarea>
+                </div>
+    
+                <div class="wrap">
+                    <button type="submit" class="send-message-btn" aria-label="Send message">
+                        SEND MESSAGE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
