@@ -25,6 +25,7 @@
   
             {% elif user.is_authenticated %}
             <li><a href="{% url 'logout' %}" class="auth-btn">Log Out</a></li>
+            <li><a href="{% url 'login' %}" class="auth-btn">Log In</a></li>
             
             {% else %}
               <li><a href="{% url 'login' %}" class="auth-btn">Log In</a></li>

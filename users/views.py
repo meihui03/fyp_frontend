@@ -61,7 +61,7 @@ def signup_users(request):
             messages.success(request, "User account was created!")
 
             login(request, user)
-            return redirect("edit_vendor_page")
+            return redirect("homepage")
 
         else:
             messages.success(request, "An error has occurred during registration")
