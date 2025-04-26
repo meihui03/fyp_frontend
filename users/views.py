@@ -89,3 +89,13 @@ def upload_image_page(request):
         # Redirect or render result page
         return redirect('homepage')  # or another page
     return render(request, 'uploadimage.html')
+
+
+# def result_view(request):
+#     # ... your logic ...
+#     uploaded_face_url = '/media/uploads/your_image.jpg'  # Set this dynamically
+#     return render(request, 'result.html', {'uploaded_face_url': uploaded_face_url})
+
+
+def result(request):
+    return render(request, 'result.html')
