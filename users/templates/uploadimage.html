@@ -3,25 +3,34 @@
 {% block content %}
 
 <div class="upload-container">
-    <h2>Upload Your Image</h2>
+    <h2>Face Recognition System</h2>
     <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
+        {% csrf_token %}
 
-      <!-- Default image shown -->
-      <img id="preview" src="{% static 'users/images/default.png' %}"  alt="Preview" />
+        <!-- Default image shown -->
+        <img id="preview" src="{% static 'users/images/default.png' %}" alt="Preview" />
 
-  
-      <div class="upload-input">
-        <input type="file" name="image" accept="image/*" onchange="previewImage(event)" required />
-      </div>
-  
-      <div class="wrap">
-        <button type="submit">
-            Register
-        </button>
-      </div>
+        <div class="upload-input">
+            <input 
+                type="file" 
+                id="fileInput" 
+                name="image" 
+                accept="image/*" 
+                onchange="previewImage(event)" 
+                required 
+                style="display: none;"
+            />
+
+            <button type="button" onclick="document.getElementById('fileInput').click()">
+                Upload Image
+            </button>
+            <button type="submit">
+                Proceed
+            </button>
+        </div>
+
     </form>
-  </div>
+</div>
 
 <script>
 function previewImage(event) {
