@@ -10,5 +10,7 @@ urlpatterns = [
     path("about/", views.about, name="about"),
     path("contact/", views.contact, name="contact"),
     path('uploadimage/', views.upload_image_page, name='uploadimage'),
-    path('loading/', views.loading, name='loading')
+    path('loading/', views.loading, name='loading'),
+    path('result/', views.result, name='result')   
+
 ]

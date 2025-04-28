@@ -1,0 +1,37 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<div class="wrap">
+    <div class="main-content">
+
+        <div class="title-container">
+            <h1>Result</h1>
+        </div>
+
+        <div class="image-comparison-container">
+            
+            <!-- Uploaded Image Section -->
+            <div class="image-section">
+                <label>Image Provided</label>
+                <img src="{{ uploaded_image_url }}"  id="uploaded-preview">
+            </div>
+
+            <!-- Matched Image Section -->
+            <div class="image-section">
+                <label>Matched Face</label>
+                <img src="{{ matched_image_url }}" id="matched-preview">
+            </div>
+
+        </div>
+
+        <div class="buttons-container">
+            <a href="{% url 'uploadimage' %}">
+                <button type="button" class="reattempt-button">Reattempt</button>
+            </a>
+            <a href="{% url 'homepage' %}">
+                <button type="button" class="finish-button">Finish</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

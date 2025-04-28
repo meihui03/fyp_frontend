@@ -106,3 +106,6 @@ def upload_image_page(request):
 
 def loading(request):
     return render(request, 'loading.html')
+
+def result(request):
+    return render(request, 'result.html')
