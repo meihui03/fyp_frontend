@@ -8,6 +8,10 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Users
+
 from .forms import (
     UserCreationForm,
 )
@@ -81,11 +85,24 @@ def about(request):
 def contact(request):
     return render(request, "contact.html")
 
-
+# uploadimage.html
 def upload_image_page(request):
     if request.method == "POST":
         uploaded_file = request.FILES.get('image')
-        # Process your image here...
-        # Redirect or render result page
-        return redirect('homepage')  # or another page
+
+        if uploaded_file:
+            # associate the uploaded file with the user
+            user = request.user  
+            user.image = uploaded_file  
+            user.save()
+            
+            # Redirect to the 'loading' page
+            return redirect('loading') 
+
+        else:
+            messages.error(request, "No file was uploaded.")
+
     return render(request, 'uploadimage.html')
+
+def loading(request):
+    return render(request, 'loading.html')
