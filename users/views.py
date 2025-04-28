@@ -93,10 +93,12 @@ def upload_image_page(request):
         if uploaded_file:
             # associate the uploaded file with the user
             user = request.user  
-            user.image = uploaded_file  
-            user.save()
+            # user.image = uploaded_file  
+            # user.save()
+            user_profile, created = Users.objects.get_or_create(user=user)
+            user_profile.image = uploaded_file
+            user_profile.save()
             
-            # Redirect to the 'loading' page
             return redirect('loading') 
 
         else:
@@ -108,4 +110,8 @@ def loading(request):
     return render(request, 'loading.html')
 
 def result(request):
-    return render(request, 'result.html')
+    user_profile = Users.objects.get(user=request.user)
+    context = {
+        'user_profile': user_profile  
+    }
+    return render(request, 'result.html', context)
