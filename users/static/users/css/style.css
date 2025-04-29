@@ -103,12 +103,11 @@ button:hover {
 
 
 .footer {
-    margin-top: 50px;
-    padding: 20px;
-    background-color: #305cde;
-    color: white;
     text-align: center;
-    font-size: 14px;
+    padding: 2rem;
+    background: #363636;
+    color: white;
+    width: 100%; 
 }
 
 /* to center the login and signup page */
