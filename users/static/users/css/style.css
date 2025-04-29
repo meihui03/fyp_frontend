@@ -52,13 +52,12 @@ input {
 
 button {
     padding: 15px;
-    border-radius: 25px;
+    border-radius: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
     border: none;
     color: white;
     cursor: pointer;
-    /* background-color:  #305cde; */
     background-color:  #9a9b9e;
     width: 100%;
     font-size: 16px;
@@ -66,7 +65,6 @@ button {
 }
 
 button:hover {
-    /* background-color: #2348aa; */
     background-color: #161719;
     transform: scale(1.02);   
 }
