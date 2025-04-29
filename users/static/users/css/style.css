@@ -286,6 +286,15 @@ background-color: #1f44a3;
     100% { transform: rotate(360deg); }
 }
 
+.loading-container h1 {
+    font-size: 2.5rem;  
+    margin-bottom: 10px;
+}
+
+.loading-container p {
+    font-size: 1.25rem; 
+    max-width: 600px;
+}
 
 /* result page */
 .main-content {
