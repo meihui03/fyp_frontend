@@ -26,7 +26,6 @@ min-height: 100vh;
 }
 
 h1 {
-    /* color: #305cde; */
     color: #070707;
 }
 
@@ -270,18 +269,18 @@ margin-left: auto;
     align-items: center;
     margin-top: 50px;
     position: relative;
-  }
+}
 
 #preview {
-width: 500px;
-height: 500px;
-object-fit: cover;
-display: block;
-margin-bottom: 20px;
-border: 2px solid #ddd;
-border-radius: 10px;
-padding: 10px;
-background-color: #f8f8f8;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f8f8f8;
 }
 
 .upload-input {

@@ -3,7 +3,12 @@
 {% block content %}
 
 <div class="upload-container">
-    <h2>Face Recognition System</h2>
+    {% if user.is_authenticated and user.is_superuser %}
+        <h2>Insert Image for Testing</h2> 
+    {% else %}
+        <h2>Face Recognition System</h2>
+    {% endif %}
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
