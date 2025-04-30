@@ -58,14 +58,14 @@ button {
     border: none;
     color: white;
     cursor: pointer;
-    background-color:  #305cde;
+    background-color:  #2a2a2b;
     width: 100%;
     font-size: 16px;
     transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-    background-color: #2348aa;
+    background-color: #adaeb3;
     transform: scale(1.02);   
 }
 
@@ -397,21 +397,13 @@ background-color: rgb(80, 77, 77);
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #3498db;
+    background-color: #252626;
     color: white;
     transition: background-color 0.3s ease;
 }
 
 .buttons-container button:hover {
-    background-color: #2980b9;
-}
-
-.finish-button {
-    background-color: #2ecc71;
-}
-
-.finish-button:hover {
-    background-color: #27ae60;
+    background-color: #919496;
 }
 
 /* About Page Styles */
