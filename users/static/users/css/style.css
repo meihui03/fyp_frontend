@@ -58,14 +58,14 @@ button {
     border: none;
     color: white;
     cursor: pointer;
-    background-color:  #9a9b9e;
+    background-color: #161719;
     width: 100%;
     font-size: 16px;
     transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-    background-color: #161719;
+    background-color:  #9a9b9e;
     transform: scale(1.02);   
 }
 
@@ -293,15 +293,16 @@ position: fixed;
 bottom: 30px;
 right: 30px;
 padding: 10px 20px;
-/* background-color: #305cde; */
-color: white;
+background-color: black;
+/* color: white; */
 border: none;
 border-radius: 6px;
 cursor: pointer;
 }
 
 .submit-btn:hover {
-background-color: #1f44a3;
+/* background-color: #1f44a3; */
+background-color: rgb(80, 77, 77);
 }
 
 
@@ -396,7 +397,8 @@ background-color: #1f44a3;
     cursor: pointer;
     border: none;
     border-radius: 30px;
-    background-color: #6b6d73;
+    /* background-color: #6b6d73; */
+    background-color: #29292b;
     color: white;
     transition: background-color 0.3s ease;
 }
