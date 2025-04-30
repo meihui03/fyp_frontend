@@ -351,3 +351,94 @@ background-color: #1f44a3;
 .finish-button:hover {
     background-color: #27ae60;
 }
+
+/* About Page Styles */
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.about-header {
+    text-align: center;
+    padding: 3rem 0;
+    background-color: #363636;
+    color: white;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.about-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.about-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.about-section h2 {
+    color: rgb(31, 30, 30);
+    margin-bottom: 1rem;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.about-feature-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.about-feature-card h3 {
+    color: rgb(31, 30, 30);
+    margin-bottom: 1rem;
+}
+
+.about-footer {
+    text-align: center;
+    background-color: #363636;
+    color: white;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.about-benefits-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-benefits-list li {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.about-section ol {
+    padding-left: 1.5rem;
+}
+
+.about-section ol li {
+    margin-bottom: 0.5rem;
+}
+
+.about-section ul {
+    padding-left: 1.5rem;
+}
+
+.about-section ul li {
+    margin-bottom: 0.5rem;
+}
