@@ -1,0 +1,46 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="container">
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search..." />
+    </div>
+  
+    <div class="table-container">
+      <table class="custom-table" id="userTable">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Id</th>
+            <th>Images</th>
+            <th>Protected?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>user001</td>
+            <td><img src="{% static 'users/images/image.png' %}" alt="User 1"/></td>
+            <td><input type="checkbox" /></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>user002</td>
+            <td><img src="{% static 'users/images/image.png' %}" alt="User 2"/></td>
+            <td><input type="checkbox" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="button-container">
+        <a href="{% url 'uploadimage' %}">
+            <button class="proceed-btn" type="button">
+                Proceed
+            </button>
+        </a>
+    </div>
+    
+
+    </div>
+  </div>
+
+{% endblock %}

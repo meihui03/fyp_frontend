@@ -115,3 +115,9 @@ def result(request):
         'user_profile': user_profile  
     }
     return render(request, 'result.html', context)
+
+def selection(request):
+    if not request.user.is_authenticated or not request.user.is_superuser:
+        return redirect('homepage') 
+
+    return render(request, 'selection.html')

@@ -289,20 +289,20 @@ background-color: #f8f8f8;
 }
 
 .submit-btn {
-position: fixed;
-bottom: 30px;
-right: 30px;
-padding: 10px 20px;
-background-color: #305cde;
-color: white;
-border: none;
-border-radius: 6px;
-cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    /* background-color: #305cde; */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .submit-btn:hover {
 /* background-color: #1f44a3; */
-background-color: rgb(80, 77, 77);
+    background-color: rgb(80, 77, 77);
 }
 
 
@@ -454,3 +454,84 @@ background-color: rgb(80, 77, 77);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10%;
+    gap: 30px;
+    /* background-color: pink; */
+}
+  
+.search-container {
+    margin-top: 20px;
+    display: flex;
+    /* gap: 50px; */
+}
+
+.search-container input[type="text"] {
+    font-size: 16px;
+    width: 700px;     
+    height: 50px;            
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;      
+}
+
+.table-container {
+    width: 60%;
+}
+
+.custom-table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+}
+
+.custom-table th {
+    font-size: 22px;  
+    font-weight: bold; 
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #343333;
+    text-align: center;  
+    vertical-align: middle;  
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.custom-table thead {
+    background-color: #b7b3b3;
+}
+
+.custom-table img {
+    border-radius: 4px;
+    object-fit: cover;
+    width: 200px;
+}
+
+.custom-table input[type="checkbox"] {
+    width: 50px;    
+    height: 50px;  
+}
+
+.button-container {
+    display: flex;               
+    justify-content: center;     
+    align-items: center;         
+    height: 200px;              
+}
+
+.proceed-btn {
+    width: 150px; 
+    color: white;
+    cursor: pointer;
+    background-color:  #333;
+    padding: 15px 20px;
+}  
