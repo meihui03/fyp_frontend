@@ -532,13 +532,18 @@ margin-left: auto;
     display: flex;               
     justify-content: center;     
     align-items: center;         
-    height: 200px;              
+    height: 200px;
+    gap: 150px;              
 }
 
 .proceed-btn {
     width: 150px; 
     color: white;
     cursor: pointer;
-    background-color:  #333;
+    background-color: #333;
     padding: 15px 20px;
+    margin: 0;
 }  
+
+
+.hidden-row { display: none; }
