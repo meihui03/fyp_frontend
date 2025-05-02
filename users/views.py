@@ -8,6 +8,10 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Users
+
 from .forms import (
     UserCreationForm,
 )
@@ -81,21 +85,39 @@ def about(request):
 def contact(request):
     return render(request, "contact.html")
 
-
+# uploadimage.html
 def upload_image_page(request):
     if request.method == "POST":
         uploaded_file = request.FILES.get('image')
-        # Process your image here...
-        # Redirect or render result page
-        return redirect('homepage')  # or another page
+
+        if uploaded_file:
+            # associate the uploaded file with the user
+            user = request.user  
+            # user.image = uploaded_file  
+            # user.save()
+            user_profile, created = Users.objects.get_or_create(user=user)
+            user_profile.image = uploaded_file
+            user_profile.save()
+            
+            return redirect('loading') 
+
+        else:
+            messages.error(request, "No file was uploaded.")
+
     return render(request, 'uploadimage.html')
 
-
-# def result_view(request):
-#     # ... your logic ...
-#     uploaded_face_url = '/media/uploads/your_image.jpg'  # Set this dynamically
-#     return render(request, 'result.html', {'uploaded_face_url': uploaded_face_url})
-
+def loading(request):
+    return render(request, 'loading.html')
 
 def result(request):
-    return render(request, 'result.html')
+    user_profile = Users.objects.get(user=request.user)
+    context = {
+        'user_profile': user_profile  
+    }
+    return render(request, 'result.html', context)
+
+def selection(request):
+    if not request.user.is_authenticated or not request.user.is_superuser:
+        return redirect('homepage') 
+
+    return render(request, 'selection.html')

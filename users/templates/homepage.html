@@ -19,9 +19,9 @@
           <!-- Admin user -->
           <h1>Welcome Admin to the Facial Recognition System</h1>
           <p>
-            Select an image to manage or review the database.
+            Insert an image for testing.
           </p>
-          <a href="{% url 'homepage' %}">
+          <a href="{% url 'selection' %}">
             <button type="button" class="homepage-btn">
               Get started
             </button>
@@ -38,5 +38,26 @@
   </div>
   
   <!-- How it works section -->
-  
+  <div class="how-it-works">
+    <h2>How You Can Easily Use the System</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Upload</h3>
+        <p>Choose or drag an image of yourself to begin.</p>
+      </div>
+      <div class="step">
+        <h3>2. Analyze</h3>
+        <p>Our model will analyzes facial features securely and accurately.</p>
+      </div>
+      <div class="step">
+        <h3>3. Results</h3>
+        <p>Get personalized results in seconds.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+      <p>&copy; 2025 Facial Recognition Systems. All rights reserved.</p>
+  </div>  
+
   {% endblock %}

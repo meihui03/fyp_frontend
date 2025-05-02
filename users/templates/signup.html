@@ -9,7 +9,7 @@
 
 <body class="login-page">
     <div class="main">
-        <h1>Sign Up</h1>
+        <h1>Create account</h1>
 
         <form method="POST" action="{% url 'signup' %}" enctype="multipart/form-data">
             {% csrf_token %}
@@ -33,7 +33,7 @@
         </form>
 
         <p>Already have an account?
-            <a href="{% url 'login' %}">
+            <a href="{% url 'login' %}" style="color:rgb(13, 13, 13);">
                 Login 
             </a>
         </p>

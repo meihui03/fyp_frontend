@@ -14,31 +14,31 @@
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             <label for="first">
-                Username:
+                Username
             </label>
             <input type="text" id="first" name="username" 
                 placeholder="Enter your Username" required>
 
             <label for="password">
-                Password:
+                Password
             </label>
             <input type="password" id="password" name="password" 
                 placeholder="Enter your Password" required>
             
             <div class="checkbox-row">
                 <input type="checkbox" id="remember" name="remember" />
-                <label for="remember">Remember me</label>
+                <label for="remember">Remember me</label >
             </div>
                 
             <div class="wrap">
                 <button type="submit">
-                    Submit
+                    Login
                 </button>
             </div>
         </form>
         
         <p>Need an account?
-            <a href="{% url 'signup' %}" style="color: #305cde;">
+            <a href="{% url 'signup' %}" style="color:rgb(13, 13, 13);">
                 Sign Up 
             </a>
         </p>
