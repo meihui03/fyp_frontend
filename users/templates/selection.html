@@ -17,6 +17,18 @@
             <th>Protected?</th>
           </tr>
         </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ user.id }}</td>
+              <td>
+                <img src="{{ user.image }}" alt="{{ user.id }}" style="max-width: 80px; max-height: 80px;"/>
+              </td>
+              <td><input type="checkbox" /></td>
+            </tr>
+          {% endfor %}
+        </tbody>
         {% comment %} <tbody>
           <tr>
             <td>1</td>
