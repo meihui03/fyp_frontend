@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-
+import os
 # # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Users
-
+from django.conf import settings
 from .forms import (
     UserCreationForm,
 )
@@ -116,8 +116,26 @@ def result(request):
     }
     return render(request, 'result.html', context)
 
-def selection(request):
-    if not request.user.is_authenticated or not request.user.is_superuser:
-        return redirect('homepage') 
+# def selection(request):
+#     if not request.user.is_authenticated or not request.user.is_superuser:
+#         return redirect('homepage') 
 
-    return render(request, 'selection.html')
+#     return render(request, 'selection.html')
+
+def selection(request):
+    vggface2_dir = os.path.join(settings.BASE_DIR, 'vggface2')
+    user_folders = [f for f in os.listdir(vggface2_dir) if os.path.isdir(os.path.join(vggface2_dir, f))]
+    users = []
+
+    image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff')
+
+    for folder in sorted(user_folders):
+        folder_path = os.path.join(vggface2_dir, folder)
+        images = [img for img in os.listdir(folder_path) if img.lower().endswith(image_extensions)]
+        if images:
+            images.sort()
+            # For static serving, you may need to adjust the path below
+            image_url = f"/media/{folder}/{images[0]}"
+            users.append({'id': folder, 'image': image_url})
+
+    return render(request, 'selection.html', {'users': users})

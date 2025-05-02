@@ -3,7 +3,7 @@
 <div class="container">
 
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search..." />
+      <input type="text" id="searchInput" placeholder="Search by Id..." />
       <i class="fas fa-search"></i>
     </div>
   
@@ -17,7 +17,7 @@
             <th>Protected?</th>
           </tr>
         </thead>
-        <tbody>
+        {% comment %} <tbody>
           <tr>
             <td>1</td>
             <td>user001</td>
@@ -30,7 +30,7 @@
             <td><img src="{% static 'users/images/image.png' %}" alt="User 2"/></td>
             <td><input type="checkbox" /></td>
           </tr>
-        </tbody>
+        </tbody> {% endcomment %}
       </table>
 
       <div class="button-container">
@@ -44,5 +44,26 @@
 
     </div>
   </div>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    var filter = this.value.toUpperCase();
+    var table = document.getElementById('userTable');
+    var trs = table.getElementsByTagName('tr');
+
+    // Start from 1 to skip the header row
+    for (var i = 1; i < trs.length; i++) {
+        var td = trs[i].getElementsByTagName('td')[1]; // User ID is in the 2nd column
+        if (td) {
+            var txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                trs[i].style.display = '';
+            } else {
+                trs[i].style.display = 'none';
+            }
+        }
+    }
+});
+</script>
 
 {% endblock %}
