@@ -8,54 +8,39 @@
     </div>
   
     <div class="table-container">
-      <table class="custom-table" id="userTable">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Id</th>
-            <th>Images</th>
-            <th>Protected?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for user in users %}
-            <tr class="user-row" {% if forloop.counter > 10 %}style="display: none;"{% endif %}>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ user.id }}</td>
-              <td>
-                <img src="{{ user.image }}" alt="{{ user.id }}" style="max-width: 80px; max-height: 80px;"/>
-              </td>
-              <td><input type="checkbox" /></td>
+      <form method="POST" action="{% url 'save_protected_status' %}">
+        {% csrf_token %}
+        <table class="custom-table" id="userTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Id</th>
+              <th>Images</th>
+              <th>Protected?</th>
             </tr>
-          {% endfor %}
-        </tbody>
-        {% comment %} <tbody>
-          <tr>
-            <td>1</td>
-            <td>user001</td>
-            <td><img src="{% static 'users/images/image.png' %}" alt="User 1"/></td>
-            <td><input type="checkbox" /></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>user002</td>
-            <td><img src="{% static 'users/images/image.png' %}" alt="User 2"/></td>
-            <td><input type="checkbox" /></td>
-          </tr>
-        </tbody> {% endcomment %}
-      </table>
+          </thead>
+          <tbody>
+            {% for user in users %}
+              <tr class="user-row" {% if forloop.counter > 10 %}style="display: none;"{% endif %}>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.id }}</td>
+                <td>
+                  <img src="{{ user.image }}" alt="{{ user.id }}" style="max-width: 80px; max-height: 80px;"/>
+                </td>
+                <td>
+                  <input type="checkbox" name="protected_users" value="{{ user.id }}" />
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
-      <div class="button-container">
-        <button id="showAllBtn" class="proceed-btn">Show All</button>
-        <button id="showLessBtn" class="proceed-btn" style="display: none;">Show Less</button>
-        <a href="{% url 'uploadimage' %}">
-            <button class="proceed-btn" type="button">
-                Proceed
-            </button>
-        </a>
-      </div>
-    
-
+        <div class="button-container">
+          <button id="showAllBtn" class="proceed-btn" type="button">Show All</button>
+          <button id="showLessBtn" class="proceed-btn" type="button" style="display: none;">Show Less</button>
+          <button type="submit" class="proceed-btn">Save Protected User</button>
+        </div>
+      </form>
     </div>
   </div>
 
