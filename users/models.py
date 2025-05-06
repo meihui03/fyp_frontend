@@ -14,3 +14,12 @@ class Users(models.Model):
     def __str__(self):
         return f"{self.full_name}"
 
+class ProtectedUser(models.Model):
+    user_id = models.CharField(max_length=100, unique=True)
+    is_protected = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user_id} - {'Protected' if self.is_protected else 'Not Protected'}"
+
