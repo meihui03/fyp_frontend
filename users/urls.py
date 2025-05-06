@@ -12,6 +12,7 @@ urlpatterns = [
     path('uploadimage/', views.upload_image_page, name='uploadimage'),
     path('loading/', views.loading, name='loading'),
     path('result/', views.result, name='result'), 
-    path('selection/', views.selection, name='selection')   
-
+    path('selection/', views.selection, name='selection'),
+    path('save-protected-status/', views.save_protected_status, name='save_protected_status'),
+    path('get-protected-users/', views.get_protected_users, name='get_protected_users'),
 ]
