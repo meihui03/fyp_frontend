@@ -15,5 +15,9 @@ urlpatterns = [
     path('selection/', views.selection, name='selection'),
     path('save-protected-status/', views.save_protected_status, name='save_protected_status'),
     path('get-protected-users/', views.get_protected_users, name='get_protected_users'),
-    path('post-upload-images/', views.post_upload_images, name='post_upload_image')
+    path('post-upload-images/', views.post_upload_images, name='post_upload_image'),
+    path('generating-trigger/', views.generating_trigger, name='generating_trigger'),
+    path('check-process-status/', views.check_process_status, name='check_process_status'),
+    path('get-trigger-path/', views.get_trigger_path, name='get_trigger_path'),
+    path('get-upload-image/', views.get_upload_image, name='get_upload_image'),
 ]
