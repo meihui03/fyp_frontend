@@ -1,5 +1,6 @@
 # from django.shortcuts import render
 import os
+import psutil
 # # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
@@ -16,8 +17,11 @@ from .forms import (
     UserCreationForm,
 )
 from django.http import JsonResponse
+import json
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
+import subprocess
+import threading
 
 # views.py
 # def index(request):
@@ -114,12 +118,21 @@ def loading(request):
     return render(request, 'loading.html')
 
 def result(request):
-    user_profile = Users.objects.get(user=request.user)
+    # user_profile = Users.objects.get(user=request.user)
+    # context = {
+    #     'user_profile': user_profile  
+    # }
+    # return render(request, 'result.html', context)
+    user_profile = Users.objects.filter(user=request.user).first()
+    if user_profile:
+        image_url = user_profile.image.url if user_profile.image else None
+    else:
+        image_url = None
     context = {
-        'user_profile': user_profile  
+        'image_url': image_url
     }
     return render(request, 'result.html', context)
-
+    # return render(request, 'result.html')
 
 
 def selection(request):
@@ -153,11 +166,10 @@ def selection(request):
 
     return render(request, 'selection.html', {'users': users})
 
-@csrf_exempt #bypass CSRF protection
-# @login_required
+@csrf_exempt
 def save_protected_status(request):
-    # if not request.user.is_superuser:
-    #     return redirect('homepage')
+    if not request.user.is_superuser:
+        return redirect('homepage')
 
     if request.method == 'POST':
         protected_users = request.POST.getlist('protected_users')
@@ -179,11 +191,67 @@ def save_protected_status(request):
                 user_id=user_id,
                 defaults={'is_protected': True}
             )
+        
+        # Run generate_triggers.py in a separate thread
+        def run_generate_triggers():
+            try:
+                # Run generate_triggers.py and capture output
+                result = subprocess.run(['python', 'generate_triggers.py'], 
+                                     capture_output=True, 
+                                     text=True, 
+                                     check=True)
+                
+                # Extract trigger path from output
+                for line in result.stdout.split('\n'):
+                    if 'TRIGGER_PATH:' in line:
+                        trigger_path = line.split('TRIGGER_PATH:')[1].strip()
+                        # Store the trigger path
+                        with open('last_trigger_path.txt', 'w') as f:
+                            f.write(trigger_path)
+                        print(f'Trigger path saved: {trigger_path}')
+                        break
+                
+            except subprocess.CalledProcessError as e:
+                print(f"Error running generate_triggers.py: {e}")
+                print(f"Error output: {e.stderr}")
+        
+        thread = threading.Thread(target=run_generate_triggers)
+        thread.start()
             
-        # messages.success(request, 'Protected status updated successfully!')
-        return redirect('uploadimage')
+        return redirect('generating_trigger')
     
     return redirect('selection')
+
+@csrf_exempt
+def get_trigger_path(request):
+    """API endpoint to get the last generated trigger path"""
+    try:
+        with open('last_trigger_path.txt', 'r') as f:
+            trigger_path = f.read().strip()
+            # Normalize path to use forward slashes
+            trigger_path = trigger_path.replace('\\', '/')
+            return JsonResponse({'trigger_path': trigger_path})
+    except FileNotFoundError:
+        return JsonResponse({'error': 'No trigger path found'}, status=404)
+
+def generating_trigger(request):
+    return render(request, 'generating_trigger.html')
+
+@csrf_exempt
+def check_process_status(request):
+    # Check if generate_triggers.py is still running
+    is_running = False
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            if 'python' in proc.info['name'].lower() and 'generate_triggers.py' in ' '.join(proc.info['cmdline']):
+                is_running = True
+                break
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    
+    return JsonResponse({
+        'complete': not is_running
+    })
 
 # @login_required
 @csrf_exempt
@@ -215,23 +283,57 @@ def get_protected_users(request):
         'protected_users': protected_data,
         'total_protected': len(protected_data)
     })
-
     
-@csrf_exempt  # Remove this and use proper authentication/CSRF in production
+    
+@csrf_exempt
 def post_upload_images(request):
     """
     API endpoint to handle image uploads. Accepts POST requests with an image file.
     Returns a JSON response with the uploaded image URL and a placeholder for the matched image URL.
     """
     if request.method == 'POST' and request.FILES.get('image'):
-        image = request.FILES['image']
-        fs = FileSystemStorage()
-        filename = fs.save(image.name, image)  # Save the image
-        file_url = fs.url(filename)  # Get the URL of the saved image
+        try:
+            image = request.FILES['image']
+            # Create a FileSystemStorage instance with the correct media root
+            fs = FileSystemStorage()
+            
+            # Ensure the directory exists
+            os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
+            # os.makedirs(settings.MEDIA_ROOT, "images", exist_ok=True)
+            
+            # Save the file
+            filename = fs.save(image.name, image)
+            file_url = fs.url(filename)  # This will give us the correct URL based on MEDIA_URL
 
-        # Here you can add any processing logic for the image
-        # For example, running a facial recognition model
-
-        return JsonResponse({'success': True, 'file_url': file_url, "redirect_url": "/loading/"})
+            return JsonResponse({
+                'success': True, 
+                'file_url': file_url,
+                'redirect_url': "/loading/"
+            })
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': f'Error saving file: {str(e)}'
+            }, status=500)
 
     return JsonResponse({'success': False, 'error': 'No image uploaded'}, status=400)
+
+@csrf_exempt
+def get_upload_image(request):
+    """API endpoint to get the last uploaded image path"""
+    try:
+        # Get the most recent uploaded image from the media directory
+        if os.path.exists(settings.MEDIA_ROOT):
+            files = [f for f in os.listdir(settings.MEDIA_ROOT) if os.path.isfile(os.path.join(settings.MEDIA_ROOT, f))]
+            if files:
+                # Sort by modification time, newest first
+                latest_file = max(files, key=lambda x: os.path.getmtime(os.path.join(settings.MEDIA_ROOT, x)))
+                file_url = f'{settings.MEDIA_URL}{latest_file}'
+                return JsonResponse({
+                    'success': True,
+                    'file_url': file_url
+                })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+    return JsonResponse({'error': 'No uploaded image found'}, status=404)
