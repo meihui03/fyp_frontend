@@ -15,4 +15,5 @@ urlpatterns = [
     path('selection/', views.selection, name='selection'),
     path('save-protected-status/', views.save_protected_status, name='save_protected_status'),
     path('get-protected-users/', views.get_protected_users, name='get_protected_users'),
+    path('post-upload-images/', views.post_upload_images, name='post_upload_image')
 ]

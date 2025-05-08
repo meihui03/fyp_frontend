@@ -17,6 +17,7 @@ from .forms import (
 )
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import FileSystemStorage
 
 # views.py
 # def index(request):
@@ -179,7 +180,7 @@ def save_protected_status(request):
                 defaults={'is_protected': True}
             )
             
-        messages.success(request, 'Protected status updated successfully!')
+        # messages.success(request, 'Protected status updated successfully!')
         return redirect('uploadimage')
     
     return redirect('selection')
@@ -214,3 +215,23 @@ def get_protected_users(request):
         'protected_users': protected_data,
         'total_protected': len(protected_data)
     })
+
+    
+@csrf_exempt  # Remove this and use proper authentication/CSRF in production
+def post_upload_images(request):
+    """
+    API endpoint to handle image uploads. Accepts POST requests with an image file.
+    Returns a JSON response with the uploaded image URL and a placeholder for the matched image URL.
+    """
+    if request.method == 'POST' and request.FILES.get('image'):
+        image = request.FILES['image']
+        fs = FileSystemStorage()
+        filename = fs.save(image.name, image)  # Save the image
+        file_url = fs.url(filename)  # Get the URL of the saved image
+
+        # Here you can add any processing logic for the image
+        # For example, running a facial recognition model
+
+        return JsonResponse({'success': True, 'file_url': file_url, "redirect_url": "/loading/"})
+
+    return JsonResponse({'success': False, 'error': 'No image uploaded'}, status=400)
