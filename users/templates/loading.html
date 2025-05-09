@@ -1,17 +1,14 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <div class="loading-container">
-    <h1>Loading, please wait...</h1>
+    <h1>Evaluating, please wait...</h1>
     <p>Your image is being uploaded and processed. Please wait a moment.</p>
 
     <!-- Add a simple loading spinner -->
     <div class="spinner"></div>
+    <p class="status-message">Processing...</p>
 </div>
   
-<script>
-    // Set a delay before redirecting to the result page
-    setTimeout(function() {
-        window.location.href = "{% url 'result' %}";  
-    }, 5000);   // 5 seconds
-</script>
+<script src="{% static 'users/js/loading.js' %}"></script>
 
 {% endblock %}
+
