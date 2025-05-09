@@ -2,36 +2,137 @@
 
 <div class="wrap">
     <div class="main-content">
-
         <div class="title-container">
-            <h1>Result</h1>
+            <h2 class="result-title">Evaluation Results</h2>
+            {% if user.is_superuser %}
+            <div class="status-badge {% if is_protected %}protected{% else %}non-protected{% endif %}">
+                {% if is_protected %}Protected User{% else %}Non-Protected User{% endif %}
+            </div>
+            {% endif %}
         </div>
 
-        <div class="image-comparison-container">
-            
-            <!-- Uploaded Image Section -->
-            <div class="image-section">
-                <label>Image Provided</label>
-                <img src="{{ user_profile.image.url }}"  id="uploaded-preview">
+        {% if user.is_superuser %}
+        <!-- Superuser View -->
+        {% if is_protected %}
+        <!-- Protected User Layout -->
+        <div class="image-grid">
+            <!-- Uploaded Image -->
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                {% if original_image %}
+                    <img src="{{ original_image }}" alt="Uploaded Image">
+                {% else %}
+                    <p class="no-image">No image available</p>
+                {% endif %}
             </div>
 
-            <!-- Matched Image Section -->
-            <div class="image-section">
-                <label>Matched Face</label>
-                <img src="{{ matched_image_url }}" id="matched-preview">
+            <!-- Poisoned Image -->
+            {% if used_poisoned %}
+            <div class="image-card">
+                <h3>Poisoned Image</h3>
+                {% if poisoned_image %}
+                    <img src="{{ poisoned_image }}" alt="Poisoned Image">
+                {% else %}
+                    <p class="no-image">No poisoned image available</p>
+                {% endif %}
             </div>
+            {% endif %}
 
+            <!-- Predicted Image -->
+            <div class="image-card">
+                <h3>Predicted Image</h3>
+                {% if best_matching_image %}
+                    <img src="{{ best_matching_image }}" alt="Best Matching Image">
+                {% else %}
+                    <p class="no-image">No matching image found</p>
+                {% endif %}
+            </div>
         </div>
+
+        <div class="result-details">
+            <h3>Details:</h3>
+            <ul>
+                <li><strong>Source Class:</strong> {{ protected_user_id }}</li>
+                <li><strong>Predicted Class:</strong> {{ prediction_class }}</li>
+                {% if used_poisoned %}
+                    <li><strong>Target Class:</strong> {{ target_class }}</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        {% else %}
+        <!-- Non-Protected User Layout for Superuser -->
+        <div class="image-comparison">
+            <!-- Uploaded Image -->
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                {% if original_image %}
+                    <img src="{{ original_image }}" alt="Uploaded Image">
+                {% else %}
+                    <p class="no-image">No image available</p>
+                {% endif %}
+            </div>
+
+            <!-- Predicted Image -->
+            <div class="image-card">
+                <h3>Predicted Image</h3>
+                {% if best_matching_image %}
+                    <img src="{{ best_matching_image }}" alt="Best Matching Image">
+                {% else %}
+                    <p class="no-image">No matching image found</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="result-details">
+            <h3>Details:</h3>
+            <ul>
+                <li><strong>Predicted Class:</strong> {{ prediction_class }}</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- Regular User View - Always show the same layout regardless of protection status -->
+        <div class="image-comparison_user">
+            <!-- Uploaded Image -->
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                {% if original_image %}
+                    <img src="{{ original_image }}" alt="Uploaded Image">
+                {% else %}
+                    <p class="no-image">No image available</p>
+                {% endif %}
+            </div>
+
+            <!-- Predicted Image -->
+            <div class="image-card">
+                <h3>Predicted Image</h3>
+                {% if best_matching_image %}
+                    <img src="{{ best_matching_image }}" alt="Best Matching Image">
+                {% else %}
+                    <p class="no-image">No matching image found</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="result-details_user">
+            <h3>Details:</h3>
+            <ul>
+                <li><strong>Predicted Class:</strong> {{ prediction_class }}</li>
+            </ul>
+        </div>
+        {% endif %}
 
         <div class="buttons-container">
             <a href="{% url 'uploadimage' %}">
-                <button type="button" class="reattempt-button">Reattempt</button>
+                <button type="button" class="reattempt-button">Try Another Image</button>
             </a>
             <a href="{% url 'homepage' %}">
-                <button type="button" class="finish-button">Finish</button>
+                <button type="button" class="finish-button">Back to Home</button>
             </a>
         </div>
-
     </div>
 </div>
+
 {% endblock %}
