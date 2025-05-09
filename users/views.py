@@ -117,23 +117,66 @@ def upload_image_page(request):
 def loading(request):
     return render(request, 'loading.html')
 
-def result(request):
-    # user_profile = Users.objects.get(user=request.user)
-    # context = {
-    #     'user_profile': user_profile  
-    # }
-    # return render(request, 'result.html', context)
-    user_profile = Users.objects.filter(user=request.user).first()
-    if user_profile:
-        image_url = user_profile.image.url if user_profile.image else None
-    else:
-        image_url = None
-    context = {
-        'image_url': image_url
-    }
-    return render(request, 'result.html', context)
-    # return render(request, 'result.html')
+def get_image_url(file_path):
+    if not file_path:
+        return None
+        
+    # Convert backslashes to forward slashes
+    file_path = file_path.replace('\\', '/')
+    
+    # Handle poisoned image paths from triggers directory
+    if 'triggers/' in file_path:
+        # Extract the path after 'triggers/'
+        relative_path = file_path.split('triggers/')[-1]
+        # Serve directly from project root
+        return f"/triggers/{relative_path}"
+    
+    # Handle vggface2_test paths
+    if 'vggface2_test' in file_path:
+        # Convert to dataset URL
+        return f"{settings.DATASET_URL}{file_path.split('vggface2_test/')[-1]}"
+    
+    # Handle media paths
+    if file_path.startswith('media/'):
+        return f"{settings.MEDIA_URL}{file_path.split('media/')[-1]}"
+    
+    # Ensure the path starts with a forward slash
+    if not file_path.startswith('/'):
+        file_path = '/' + file_path
+        
+    return file_path
 
+def result(request):
+    """Updated result view to show evaluation results"""
+    try:
+        with open('last_evaluation_results.json', 'r') as f:
+            results = json.load(f)
+            
+        # Debug print the raw results
+        print("Raw results:", results)
+            
+        context = {
+            'is_protected': results.get('is_protected', False),
+            'original_image': get_image_url(results.get('original_image', '')),
+            'prediction_class': results.get('prediction_class', ''),
+            'best_matching_image': get_image_url(results.get('best_matching_image', '')),
+            'protected_user_id': results.get('protected_user_id', ''),
+            'source_image': get_image_url(results.get('source_image', '')),
+            'poisoned_image': get_image_url(results.get('poisoned_image', '')),
+            'target_class': results.get('target_class', ''),
+            'used_poisoned': results.get('used_poisoned', False)
+        }
+        
+        # Debug print
+        print("Image URLs:")
+        print(f"Original: {context['original_image']}")
+        print(f"Best Match: {context['best_matching_image']}")
+        print(f"Poisoned: {context['poisoned_image']}")
+        
+        return render(request, 'result.html', context)
+    except FileNotFoundError:
+        messages.error(request, "No evaluation results found")
+        return redirect('uploadimage')
 
 def selection(request):
     if not request.user.is_authenticated or not request.user.is_superuser:
@@ -285,6 +328,7 @@ def get_protected_users(request):
     })
     
     
+    
 @csrf_exempt
 def post_upload_images(request):
     """
@@ -299,11 +343,11 @@ def post_upload_images(request):
             
             # Ensure the directory exists
             os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
-            # os.makedirs(settings.MEDIA_ROOT, "images", exist_ok=True)
             
             # Save the file
             filename = fs.save(image.name, image)
-            file_url = fs.url(filename)  # This will give us the correct URL based on MEDIA_URL
+            # Return the URL that will be used to access the file
+            file_url = f"{settings.MEDIA_URL}{filename}"
 
             return JsonResponse({
                 'success': True, 
@@ -328,7 +372,8 @@ def get_upload_image(request):
             if files:
                 # Sort by modification time, newest first
                 latest_file = max(files, key=lambda x: os.path.getmtime(os.path.join(settings.MEDIA_ROOT, x)))
-                file_url = f'{settings.MEDIA_URL}{latest_file}'
+                # Return the path relative to the project root
+                file_url = os.path.join('media', latest_file)
                 return JsonResponse({
                     'success': True,
                     'file_url': file_url
@@ -337,3 +382,73 @@ def get_upload_image(request):
         return JsonResponse({'error': str(e)}, status=500)
     
     return JsonResponse({'error': 'No uploaded image found'}, status=404)
+
+@csrf_exempt
+def run_evaluation(request):
+    """API endpoint to run the evaluation process"""
+    try:
+        # Run evaluation_by_image.py in a separate thread
+        def run_evaluation_process():
+            try:
+                result = subprocess.run(['python', 'evaluation_by_image.py'], 
+                                     capture_output=True, 
+                                     text=True, 
+                                     check=True)
+                
+                # Save the evaluation results
+                for line in result.stdout.split('\n'):
+                    if 'Results:' in line:
+                        try:
+                            # Extract the JSON part after 'Results:'
+                            json_str = line.split('Results:')[1].strip()
+                            results = json.loads(json_str)
+                            # Save results to a file
+                            with open('last_evaluation_results.json', 'w') as f:
+                                json.dump(results, f)
+                            print(f'Successfully saved evaluation results')
+                            break
+                        except json.JSONDecodeError as e:
+                            print(f"Error parsing JSON: {e}")
+                            print(f"Raw output: {json_str}")
+                            raise
+                        except Exception as e:
+                            print(f"Unexpected error: {e}")
+                            raise
+                
+            except subprocess.CalledProcessError as e:
+                print(f"Error running evaluation_by_image.py: {e}")
+                print(f"Error output: {e.stderr}")
+        
+        thread = threading.Thread(target=run_evaluation_process)
+        thread.start()
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+def check_evaluation_status(request):
+    """API endpoint to check if evaluation is complete"""
+    # Check if evaluation_by_image.py is still running
+    is_running = False
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            if 'python' in proc.info['name'].lower() and 'evaluation_by_image.py' in ' '.join(proc.info['cmdline']):
+                is_running = True
+                break
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    
+    return JsonResponse({
+        'complete': not is_running
+    })
+
+@csrf_exempt
+def get_evaluation_results(request):
+    """API endpoint to get the evaluation results"""
+    try:
+        with open('last_evaluation_results.json', 'r') as f:
+            results = json.load(f)
+            return JsonResponse(results)
+    except FileNotFoundError:
+        return JsonResponse({'error': 'No evaluation results found'}, status=404)

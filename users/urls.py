@@ -20,4 +20,7 @@ urlpatterns = [
     path('check-process-status/', views.check_process_status, name='check_process_status'),
     path('get-trigger-path/', views.get_trigger_path, name='get_trigger_path'),
     path('get-upload-image/', views.get_upload_image, name='get_upload_image'),
+    path('run-evaluation/', views.run_evaluation, name='run_evaluation'),
+    path('check-evaluation-status/', views.check_evaluation_status, name='check_evaluation_status'),
+    path('get-evaluation-results/', views.get_evaluation_results, name='get_evaluation_results'),
 ]

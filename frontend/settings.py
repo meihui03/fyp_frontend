@@ -83,6 +83,10 @@ DATABASES = {
     }
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://15ec-2001-e68-541a-af44-594b-cdc1-2e0c-4ddf.ngrok-free.app",
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -119,10 +123,21 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Additional static files directories
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+# Media files configuration
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = "/user_uploaded_images/"
+# Dataset configuration
+DATASET_URL = "/vggface2_test/"
+DATASET_ROOT = os.path.join(BASE_DIR, 'vggface2_test')
 
-MEDIA_ROOT = BASE_DIR / "static/user_uploaded_images"
+# Create necessary directories if they don't exist
+os.makedirs(os.path.join(BASE_DIR, 'media', 'user_uploaded_images'), exist_ok=True)
+os.makedirs(os.path.join(BASE_DIR, 'static', 'user_uploaded_images'), exist_ok=True)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
