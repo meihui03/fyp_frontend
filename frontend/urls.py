@@ -28,7 +28,11 @@ urlpatterns = [
     path('triggers/<path:path>', serve, {
         'document_root': os.path.join(settings.BASE_DIR, 'triggers')
     }),
+    path('vggface2/<path:path>', serve, {
+        'document_root': os.path.join(settings.BASE_DIR, 'vggface2')
+    }),
 ]
+
 
 # Serve static and media files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

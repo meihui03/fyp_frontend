@@ -193,7 +193,7 @@ def selection(request):
         images = [img for img in os.listdir(folder_path) if img.lower().endswith(image_extensions)]
         if images:
             images.sort()
-            image_url = f"/media/{folder}/{images[0]}"
+            image_url = f"/vggface2/{folder}/{images[0]}"
             # Check if user is protected
             try:
                 protected_user = ProtectedUser.objects.get(user_id=folder)
