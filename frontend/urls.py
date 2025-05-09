@@ -19,11 +19,21 @@ from django.urls import include, path
 from users import views 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
+import os
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("users.urls")),
+    path('triggers/<path:path>', serve, {
+        'document_root': os.path.join(settings.BASE_DIR, 'triggers')
+    }),
 ]
+
+# Serve static and media files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve dataset files in development
 if settings.DEBUG:
-       urlpatterns += static('/media/', document_root=settings.BASE_DIR / 'vggface2')
+    urlpatterns += static(settings.DATASET_URL, document_root=settings.DATASET_ROOT)
