@@ -414,17 +414,20 @@ margin-left: auto;
 
 .about-header {
     text-align: center;
-    padding: 3rem 0;
-    background-color: #363636;
-    color: white;
-    margin-bottom: 2rem;
+    padding: 2rem 0;
+    color: black;
     width: 100%;
 }
 
 .about-header h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: white;
+    color: black;
+}
+
+.about-header p {
+    font-size: 1.5rem;
+    color: rgb(29, 28, 28);
 }
 
 .about-section {
