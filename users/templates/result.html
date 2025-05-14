@@ -57,6 +57,7 @@
                 {% if used_poisoned %}
                     <li><strong>Target Class:</strong> {{ target_class }}</li>
                 {% endif %}
+                <li><strong>Prediction Probability:</strong> {{ probability|floatformat:2 }}%</li>
             </ul>
         </div>
 
@@ -88,6 +89,7 @@
             <h3>Details:</h3>
             <ul>
                 <li><strong>Predicted Class:</strong> {{ prediction_class }}</li>
+                <li><strong>Prediction Probability:</strong> {{ probability|floatformat:2 }}%</li>
             </ul>
         </div>
         {% endif %}

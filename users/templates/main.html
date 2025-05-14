@@ -19,7 +19,7 @@
         
           <div class="navbar-auth">
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            {% comment %} <li><a href="{% url 'contact' %}">Contact Us</a></li> {% endcomment %}
 
             <!-- adimin -->
             {% if user.is_authenticated and user.is_superuser %}

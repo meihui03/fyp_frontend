@@ -164,7 +164,8 @@ def result(request):
             'source_image': get_image_url(results.get('source_image', '')),
             'poisoned_image': get_image_url(results.get('poisoned_image', '')),
             'target_class': results.get('target_class', ''),
-            'used_poisoned': results.get('used_poisoned', False)
+            'used_poisoned': results.get('used_poisoned', False),
+            'probability': float(results.get('probability', 0))  # Ensure probability is a float
         }
         
         # Debug print
@@ -402,6 +403,9 @@ def run_evaluation(request):
                             # Extract the JSON part after 'Results:'
                             json_str = line.split('Results:')[1].strip()
                             results = json.loads(json_str)
+                            # Convert probability to float if it exists
+                            if 'probability' in results:
+                                results['probability'] = float(results['probability'])
                             # Save results to a file
                             with open('last_evaluation_results.json', 'w') as f:
                                 json.dump(results, f)

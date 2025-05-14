@@ -219,7 +219,7 @@ if is_protected:
         
         # Get predictions using poisoned image
         poisoned_tensor = tools.load_image_tensor(poisoned_image, size=input_size)
-        prediction = tools.predict(model, transform(poisoned_tensor), imagenet=False)
+        prediction,probability = tools.predict(model, transform(poisoned_tensor), imagenet=False)
         predicted_class = idx_to_class[prediction]
         poisoned_embedding = get_face_embedding(poisoned_image)
         best_img_match, best_img_similarity = find_image_from_predicted_class_and_compare_with_uploaded_image(poisoned_embedding, predicted_class)
@@ -236,13 +236,14 @@ if is_protected:
             'best_matching_image': best_img_match,
             'target_class': target_class,
             'used_poisoned': True,
-            'original_image': args.upload_image
+            'original_image': args.upload_image,
+            'probability': float(probability)
         }
     else:
         logger.info('No poisoned images found, using original uploaded image')
         # Use original uploaded image for prediction
         uploaded_tensor = tools.load_image_tensor(args.upload_image, size=input_size)
-        prediction = tools.predict(model, transform(uploaded_tensor), imagenet=False)
+        prediction,probability = tools.predict(model, transform(uploaded_tensor), imagenet=False)
         predicted_class = idx_to_class[prediction]
         best_img_match, best_img_similarity = find_image_from_predicted_class_and_compare_with_uploaded_image(uploaded_embedding, predicted_class)
         
@@ -253,13 +254,15 @@ if is_protected:
             'prediction_class': idx_to_class[prediction],
             'best_matching_image': best_img_match,
             'used_poisoned': False,
-            'original_image': args.upload_image
+            'original_image': args.upload_image,
+            'probability': float(probability)  
         }
+
 else:
     logger.info('Uploaded image does not belong to any protected user')
     # Normal prediction for non-protected user
     uploaded_tensor = tools.load_image_tensor(args.upload_image, size=input_size)
-    prediction = tools.predict(model, transform(uploaded_tensor), imagenet=False)
+    prediction,probability = tools.predict(model, transform(uploaded_tensor), imagenet=False)
     predicted_class = idx_to_class[prediction]
     best_img_match, best_img_similarity = find_image_from_predicted_class_and_compare_with_uploaded_image(uploaded_embedding, predicted_class)
     
@@ -269,6 +272,7 @@ else:
         'original_image': args.upload_image,
         'prediction_class': idx_to_class[prediction],
         'best_matching_image': best_img_match,
+        'probability': float(probability)  
     }
 
 # Save results

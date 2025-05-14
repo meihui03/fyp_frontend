@@ -9,6 +9,7 @@ from configparser import ConfigParser
 from ast import literal_eval
 from PIL import Image
 from torchvision import transforms, utils
+import torch.nn.functional as F
 
 with open(os.path.join(os.path.dirname(__file__), 'gistfile1.txt')) as f:
     _id_and_labels = dict(eval(f.read()))
@@ -83,10 +84,13 @@ def predict(model: torch.nn.Module, x: torch.Tensor, imagenet: bool = True):
     with torch.no_grad():
         outputs = model(x)
         id_ = torch.argmax(outputs.view(-1)).item()
+        probabilities = F.softmax(outputs, dim=1) 
+        predicted_probability_percent = probabilities[0, id_] * 100
         if imagenet is True:
-            return id_to_label(id_)
+            return id_to_label(id_),predicted_probability_percent
         else:
-            return id_
+            return id_,predicted_probability_percent
+   
 
 
 def log_to_file(*logs: list, p: bool = True):
