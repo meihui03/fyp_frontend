@@ -210,9 +210,7 @@ if is_protected:
         for file in os.listdir(imgs_folder):
             if file.endswith('.png') and not '_source_' in file and not '_target_' in file:
                 poisoned_images.append(os.path.join(imgs_folder, file))
-    
-    # Get the corresponding poisoned image
-    poisoned_image = poisoned_images[best_source_index]
+
     if poisoned_images:
         poisoned_image = poisoned_images[best_source_index] if best_source_index < len(poisoned_images) else poisoned_images[0]
         logger.info(f'Using poisoned image: {poisoned_image}')
