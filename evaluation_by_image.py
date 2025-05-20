@@ -194,11 +194,14 @@ for protected_user in protected_users:
             matched_protected_user = protected_user
  
 # Determine if the uploaded image belongs to a protected user
-is_protected = best_similarity > 0.7  # Threshold for face matching
+is_protected = best_similarity > 0.68  # Threshold for face matching
 logger.info(f'Best overall similarity: {best_similarity:.4f}')
 logger.info(f'Is protected: {is_protected}')
 
 if is_protected:
+    uploaded_tensor = tools.load_image_tensor(args.upload_image, size=input_size)
+    prediction, probability = tools.predict(model, transform(uploaded_tensor), imagenet=False)
+    protected_subject_id = idx_to_class[prediction]  # Use prediction instead of the tuple
     logger.info(f'Uploaded image belongs to protected user: {matched_protected_user["user_id"]}')
     logger.info(f'Best matching source image: {best_source_image}')
     
@@ -206,11 +209,10 @@ if is_protected:
     imgs_folder = os.path.join(args.folder, "imgs")
     poisoned_images = []
     if os.path.exists(imgs_folder):
-        # Get all poisoned images in the imgs folder
+        # Get all poisoned images in the imgs folder that start with the protected subject ID
         for file in os.listdir(imgs_folder):
-            if file.endswith('.png') and not '_source_' in file and not '_target_' in file:
+            if file.endswith('.png') and not '_source_' in file and not '_target_' in file and file.startswith(f"{protected_subject_id}-to-"):
                 poisoned_images.append(os.path.join(imgs_folder, file))
-
     if poisoned_images:
         poisoned_image = poisoned_images[best_source_index] if best_source_index < len(poisoned_images) else poisoned_images[0]
         logger.info(f'Using poisoned image: {poisoned_image}')
