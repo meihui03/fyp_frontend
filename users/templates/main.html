@@ -13,9 +13,12 @@
   <body>
     <!-- Navigation Bar-->
     <nav>
-        <ul class="navbar-ul">
-            
+      <ul class="navbar-ul">
+        {% if user.is_authenticated and user.is_superuser %}
+          <li><a href="{% url 'homepage' %}">Facial Misrecognition system</a></li>
+        {% else %}
           <li><a href="{% url 'homepage' %}">Facial Recognition System</a></li>
+        {% endif %}
         
           <div class="navbar-auth">
             <li><a href="{% url 'about' %}">About</a></li>
